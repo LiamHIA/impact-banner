@@ -1,0 +1,19 @@
+{
+  "stats": [
+    {
+      "id": "raised",
+      "text": "\u20ac7,553,551",
+      "label": "Raised for charity"
+    },
+    {
+      "id": "lives",
+      "text": "634,096",
+      "label": "Lives changed"
+    }
+  ],
+  "brand": "rfi",
+  "track": "bend",
+  "theme": "light",
+  "updated": "2026-09-22",
+  "source": "live"
+}

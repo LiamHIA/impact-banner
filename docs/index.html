@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!--
+  Template for the page teammates open to install the banner.
+  build.py fills the {{...}} placeholders and writes the result to dist/index.html.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Add the Impact Banner</title>
+<style>
+  :root {
+    --black: #272727;
+    --white: #F4F4F4;
+    --emerald: #24E072;
+    --muted: rgba(244,244,244,0.62);
+    --line: rgba(244,244,244,0.14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    padding: 56px 16px 80px;
+  }
+  .wrap { max-width: 660px; margin: 0 auto; }
+
+  h1 { font-size: 27px; letter-spacing: -0.015em; margin-bottom: 8px; }
+  .sub { color: var(--muted); font-size: 15px; margin-bottom: 36px; }
+
+  .preview {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 14px;
+    overflow-x: auto;
+  }
+  .preview img { display: block; width: 600px; max-width: 100%; height: auto; }
+
+  button {
+    background: var(--emerald);
+    color: #06210F;
+    border: 0;
+    border-radius: 8px;
+    padding: 13px 22px;
+    font-size: 15px;
+    font-weight: 650;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  button:hover { filter: brightness(1.07); }
+  button.done { background: var(--white); }
+
+  .status { font-size: 14px; color: var(--muted); margin-top: 11px; min-height: 20px; }
+
+  h2 { font-size: 15px; margin: 40px 0 14px; letter-spacing: 0.02em; }
+  ol { padding-left: 20px; }
+  li { margin-bottom: 9px; font-size: 15px; }
+  li::marker { color: var(--emerald); }
+
+  .note {
+    margin-top: 40px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+  code {
+    background: rgba(244,244,244,0.09);
+    padding: 1.5px 5px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  details { margin-top: 16px; }
+  summary { cursor: pointer; font-size: 14px; color: var(--muted); }
+  pre {
+    margin-top: 11px;
+    background: #1b1b1b;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    overflow-x: auto;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Add the Impact Banner to your signature</h1>
+  <p class="sub">
+    Takes about 30 seconds. The numbers update themselves every week &mdash;
+    you only ever do this once.
+  </p>
+
+  <div class="preview">
+    <img id="banner" src="impact.png" width="600" height="100"
+         alt="High Impact Athletes — €7,553,551 raised for charity, 634,096 lives changed">
+  </div>
+
+  <!--
+    The copy source for the fallback path. It has to be genuinely rendered for
+    execCommand('copy') to pick it up, so it is parked off-screen rather than
+    display:none. Selecting THIS (and not the preview img) is what keeps the
+    hyperlink intact when the modern clipboard API is unavailable.
+  -->
+  <div id="copysrc" aria-hidden="true"
+       style="position:absolute;left:-10000px;top:0;width:600px;height:100px;overflow:hidden;"
+  ><a href="https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner"><img id="copyimg" src="impact.png" width="600" height="100" alt="High Impact Athletes — €7,553,551 raised for charity, 634,096 lives changed" style="display:block;border:0;outline:none;text-decoration:none;"></a></div>
+
+  <button id="copy">Copy banner</button>
+  <div class="status" id="status" role="status" aria-live="polite"></div>
+
+  <h2>Then, in Gmail</h2>
+  <ol>
+    <li>Click the <strong>gear icon</strong> (top right) &rarr; <strong>See all settings</strong>.</li>
+    <li>Scroll down the <strong>General</strong> tab to <strong>Signature</strong>.</li>
+    <li>Click into your signature, put the cursor <strong>below your name and title</strong>, and press <strong>&#8984;V</strong> (or <strong>Ctrl&nbsp;V</strong>).</li>
+    <li>Scroll to the bottom and click <strong>Save Changes</strong>.</li>
+  </ol>
+
+  <div class="note">
+    <p>
+      <strong>If the paste comes through as a broken image</strong>, your browser blocked the
+      copy. Use the fallback below instead, or just drag the banner image straight from this
+      page into the Gmail signature box.
+    </p>
+    <p style="margin-top:12px">
+      <strong>Don't type the numbers anywhere else in your signature.</strong> They go stale
+      the moment you do. The banner is the only place they should appear.
+    </p>
+
+    <details>
+      <summary>Fallback &mdash; the raw HTML, for signature tools that accept it</summary>
+      <pre id="raw">&lt;a href="https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner" target="_blank"&gt;&lt;img src="impact.png" width="600" height="100" alt="High Impact Athletes — €7,553,551 raised for charity, 634,096 lives changed" style="display:block;border:0;outline:none;text-decoration:none;"&gt;&lt;/a&gt;</pre>
+      <p style="margin-top:14px">Just the image address, if that is all you need:</p>
+      <pre id="imgurl">impact.png</pre>
+    </details>
+
+    <p style="margin-top:22px">
+      Last updated 2026-09-22 &middot; currently reading €7,553,551 raised for charity and 634,096 lives changed.
+    </p>
+  </div>
+
+</div>
+
+<script>
+  const btn = document.getElementById('copy');
+  const status = document.getElementById('status');
+
+  // The banner's absolute URL, resolved by the browser from wherever this page is
+  // hosted. This is why nothing has to be reconfigured after deploying.
+  const ABS = document.getElementById('banner').src;
+
+  const html = '<a href="https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner">'
+             + '<img src="' + ABS + '" width="600" height="100" '
+             + 'alt="High Impact Athletes — €7,553,551 raised for charity, 634,096 lives changed" '
+             + 'style="display:block;border:0;outline:none;text-decoration:none;">'
+             + '</a>';
+  const text = 'High Impact Athletes — €7,553,551 raised for charity, 634,096 lives changed. https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner';
+
+  // Show the real URL in the fallback block too, so copy-paste there also works.
+  document.getElementById('raw').textContent =
+    '<a href="https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner">'
+    + '<img src="' + ABS + '" width="600" height="100" '
+    + 'alt="High Impact Athletes — €7,553,551 raised for charity, 634,096 lives changed" '
+    + 'style="display:block;border:0;outline:none;text-decoration:none;"></a>';
+
+  // And surface it plainly, for signature managers that just want the image URL.
+  document.getElementById('imgurl').textContent = ABS;
+
+  function say(msg, done) {
+    status.textContent = msg;
+    if (done) { btn.textContent = 'Copied'; btn.classList.add('done'); }
+  }
+
+  btn.addEventListener('click', async () => {
+    // Preferred path: put real rich HTML on the clipboard so Gmail pastes an image.
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          'text/html': new Blob([html], { type: 'text/html' }),
+          'text/plain': new Blob([text], { type: 'text/plain' })
+        })
+      ]);
+      say('Copied. Now paste it into your Gmail signature.', true);
+      return;
+    } catch (e) { /* fall through */ }
+
+    // Fallback: select the off-screen anchor+image and use the legacy copy command.
+    // Selecting #copysrc rather than the preview image is deliberate — it keeps the
+    // banner clickable, which selecting the bare <img> would not.
+    try {
+      const range = document.createRange();
+      range.selectNodeContents(document.getElementById('copysrc'));
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      const ok = document.execCommand('copy');
+      sel.removeAllRanges();
+      if (ok) { say('Copied. Now paste it into your Gmail signature.', true); return; }
+      throw new Error('execCommand refused');
+    } catch (e) {
+      say('Your browser blocked the copy — drag the banner into Gmail instead, or open the fallback HTML below.');
+    }
+  });
+</script>
+</body>
+</html>
