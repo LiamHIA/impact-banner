@@ -2,18 +2,22 @@
   "stats": [
     {
       "id": "raised",
-      "text": "\u20ac7,553,551",
-      "label": "Raised for charity"
+      "text": "$8,567,323",
+      "label": "Raised for charity (USD)"
     },
     {
       "id": "lives",
-      "text": "634,096",
+      "text": "650,053",
       "label": "Lives changed"
     }
   ],
   "brand": "rfi",
   "track": "bend",
-  "theme": "light",
-  "updated": "2026-09-22",
+  "theme": "dark",
+  "offers": [
+    "banner-dark.png",
+    "banner-light.png"
+  ],
+  "updated": "2026-09-27",
   "source": "live"
 }

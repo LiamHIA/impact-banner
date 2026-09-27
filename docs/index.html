@@ -37,6 +37,21 @@
     overflow-x: auto;
   }
   .preview img { display: block; width: 600px; max-width: 100%; height: auto; }
+  .dark-preview  { background: #FFFFFF; }   /* show each one against the ground it has to survive */
+  .light-preview { background: #111111; }
+
+  .choices { display: flex; flex-direction: column; gap: 30px; }
+  .choice-head { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
+  .choice-head .name { font-size: 15px; font-weight: 650; }
+  .choice-head .tag {
+    font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase;
+    background: var(--emerald); color: #06210F; padding: 2.5px 7px; border-radius: 4px;
+    font-weight: 700;
+  }
+  .why { font-size: 13px; color: var(--muted); margin-top: 9px; }
+  button.secondary { background: transparent; color: var(--white); box-shadow: inset 0 0 0 1px rgba(244,244,244,.3); }
+  button.secondary:hover { background: rgba(244,244,244,.07); filter: none; }
+  .offscreen { position: absolute; left: -10000px; top: 0; width: 600px; height: 100px; overflow: hidden; }
 
   button {
     background: var(--emerald);
@@ -93,26 +108,51 @@
 
   <h1>Add the Impact Banner to your signature</h1>
   <p class="sub">
-    Takes about 30 seconds. The numbers update themselves every week &mdash;
-    you only ever do this once.
+    Pick a version, copy it, paste it under your signature. About 30 seconds, and
+    you only ever do it once &mdash; the numbers refresh themselves afterwards.
   </p>
 
-  <div class="preview">
-    <img id="banner" src="impact.png" width="600" height="100"
-         alt="High Impact Athletes — €7,553,551 raised for charity, 634,096 lives changed">
+  <div class="choices">
+
+    <div class="choice">
+      <div class="choice-head">
+        <span class="name">Black</span>
+        <span class="tag">Recommended</span>
+      </div>
+      <div class="preview dark-preview">
+        <img class="banner" data-file="banner-dark.png" src="banner-dark.png"
+             width="600" height="100" alt="High Impact Athletes — $8,567,323 raised for charity (usd), 650,053 lives changed">
+      </div>
+      <button class="copy" data-target="dark">Copy black banner</button>
+      <p class="why">Holds up in dark mode on phones, where a white banner
+         shows as a bright slab.</p>
+    </div>
+
+    <div class="choice">
+      <div class="choice-head">
+        <span class="name">White</span>
+      </div>
+      <div class="preview light-preview">
+        <img class="banner" data-file="banner-light.png" src="banner-light.png"
+             width="600" height="100" alt="High Impact Athletes — $8,567,323 raised for charity (usd), 650,053 lives changed">
+      </div>
+      <button class="copy secondary" data-target="light">Copy white banner</button>
+      <p class="why">Blends into a normal white email on desktop.</p>
+    </div>
+
   </div>
 
   <!--
-    The copy source for the fallback path. It has to be genuinely rendered for
-    execCommand('copy') to pick it up, so it is parked off-screen rather than
-    display:none. Selecting THIS (and not the preview img) is what keeps the
+    Copy sources for the fallback path. They must be genuinely rendered for
+    execCommand('copy') to pick them up, so they are parked off-screen rather
+    than display:none. Selecting THESE, not the preview images, is what keeps the
     hyperlink intact when the modern clipboard API is unavailable.
   -->
-  <div id="copysrc" aria-hidden="true"
-       style="position:absolute;left:-10000px;top:0;width:600px;height:100px;overflow:hidden;"
-  ><a href="https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner"><img id="copyimg" src="impact.png" width="600" height="100" alt="High Impact Athletes — €7,553,551 raised for charity, 634,096 lives changed" style="display:block;border:0;outline:none;text-decoration:none;"></a></div>
+  <div id="copysrc-dark" aria-hidden="true" class="offscreen"
+  ><a href="https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner"><img src="banner-dark.png" width="600" height="100" alt="High Impact Athletes — $8,567,323 raised for charity (usd), 650,053 lives changed" style="display:block;border:0;outline:none;text-decoration:none;"></a></div>
+  <div id="copysrc-light" aria-hidden="true" class="offscreen"
+  ><a href="https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner"><img src="banner-light.png" width="600" height="100" alt="High Impact Athletes — $8,567,323 raised for charity (usd), 650,053 lives changed" style="display:block;border:0;outline:none;text-decoration:none;"></a></div>
 
-  <button id="copy">Copy banner</button>
   <div class="status" id="status" role="status" aria-live="polite"></div>
 
   <h2>Then, in Gmail</h2>
@@ -136,78 +176,102 @@
 
     <details>
       <summary>Fallback &mdash; the raw HTML, for signature tools that accept it</summary>
-      <pre id="raw">&lt;a href="https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner" target="_blank"&gt;&lt;img src="impact.png" width="600" height="100" alt="High Impact Athletes — €7,553,551 raised for charity, 634,096 lives changed" style="display:block;border:0;outline:none;text-decoration:none;"&gt;&lt;/a&gt;</pre>
+      <pre id="raw">&lt;a href="https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner" target="_blank"&gt;&lt;img src="impact.png" width="600" height="100" alt="High Impact Athletes — $8,567,323 raised for charity (usd), 650,053 lives changed" style="display:block;border:0;outline:none;text-decoration:none;"&gt;&lt;/a&gt;</pre>
       <p style="margin-top:14px">Just the image address, if that is all you need:</p>
       <pre id="imgurl">impact.png</pre>
     </details>
 
-    <p style="margin-top:22px">
-      Last updated 2026-09-22 &middot; currently reading €7,553,551 raised for charity and 634,096 lives changed.
+    <p style="margin-top:22px" id="freshness">
+      Last updated 2026-09-27 &middot; currently reading $8,567,323 raised for charity (usd) and 650,053 lives changed.
     </p>
   </div>
 
 </div>
 
 <script>
-  const btn = document.getElementById('copy');
   const status = document.getElementById('status');
 
-  // The banner's absolute URL, resolved by the browser from wherever this page is
-  // hosted. This is why nothing has to be reconfigured after deploying.
-  const ABS = document.getElementById('banner').src;
+  // Absolute URLs, resolved by the browser from wherever this page is hosted.
+  // This is why nothing needs reconfiguring after deploying.
+  const SRC = {
+    dark:  document.querySelector('[data-file="banner-dark.png"]').src,
+    light: document.querySelector('[data-file="banner-light.png"]').src
+  };
 
-  const html = '<a href="https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner">'
-             + '<img src="' + ABS + '" width="600" height="100" '
-             + 'alt="High Impact Athletes — €7,553,551 raised for charity, 634,096 lives changed" '
-             + 'style="display:block;border:0;outline:none;text-decoration:none;">'
-             + '</a>';
-  const text = 'High Impact Athletes — €7,553,551 raised for charity, 634,096 lives changed. https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner';
+  const markup = which =>
+      '<a href="https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner">'
+    + '<img src="' + SRC[which] + '" width="600" height="100" '
+    + 'alt="High Impact Athletes — $8,567,323 raised for charity (usd), 650,053 lives changed" '
+    + 'style="display:block;border:0;outline:none;text-decoration:none;">'
+    + '</a>';
 
-  // Show the real URL in the fallback block too, so copy-paste there also works.
-  document.getElementById('raw').textContent =
-    '<a href="https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner">'
-    + '<img src="' + ABS + '" width="600" height="100" '
-    + 'alt="High Impact Athletes — €7,553,551 raised for charity, 634,096 lives changed" '
-    + 'style="display:block;border:0;outline:none;text-decoration:none;"></a>';
-
-  // And surface it plainly, for signature managers that just want the image URL.
-  document.getElementById('imgurl').textContent = ABS;
-
-  function say(msg, done) {
-    status.textContent = msg;
-    if (done) { btn.textContent = 'Copied'; btn.classList.add('done'); }
+  function reset() {
+    document.querySelectorAll('button.copy').forEach(b => {
+      b.textContent = b.dataset.target === 'dark' ? 'Copy black banner' : 'Copy white banner';
+      b.classList.remove('done');
+    });
   }
 
-  btn.addEventListener('click', async () => {
-    // Preferred path: put real rich HTML on the clipboard so Gmail pastes an image.
+  async function copy(which, btn) {
+    const html = markup(which);
+    const text = 'High Impact Athletes — $8,567,323 raised for charity (usd), 650,053 lives changed. https://www.raceforimpact.com/?utm_source=email-signature&utm_medium=email&utm_campaign=impact-banner';
+
+    const done = () => {
+      reset();
+      btn.textContent = 'Copied';
+      btn.classList.add('done');
+      status.textContent = 'Copied the ' + (which === 'dark' ? 'black' : 'white')
+                         + ' banner. Now paste it into your Gmail signature.';
+    };
+
+    // Preferred: put real rich HTML on the clipboard so Gmail pastes an image.
     try {
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          'text/html': new Blob([html], { type: 'text/html' }),
-          'text/plain': new Blob([text], { type: 'text/plain' })
-        })
-      ]);
-      say('Copied. Now paste it into your Gmail signature.', true);
-      return;
+      await navigator.clipboard.write([new ClipboardItem({
+        'text/html':  new Blob([html], { type: 'text/html' }),
+        'text/plain': new Blob([text], { type: 'text/plain' })
+      })]);
+      return done();
     } catch (e) { /* fall through */ }
 
-    // Fallback: select the off-screen anchor+image and use the legacy copy command.
-    // Selecting #copysrc rather than the preview image is deliberate — it keeps the
-    // banner clickable, which selecting the bare <img> would not.
+    // Fallback: select the matching off-screen anchor. Selecting that rather than
+    // the preview image is what keeps the banner clickable.
     try {
       const range = document.createRange();
-      range.selectNodeContents(document.getElementById('copysrc'));
+      range.selectNodeContents(document.getElementById('copysrc-' + which));
       const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
+      sel.removeAllRanges(); sel.addRange(range);
       const ok = document.execCommand('copy');
       sel.removeAllRanges();
-      if (ok) { say('Copied. Now paste it into your Gmail signature.', true); return; }
+      if (ok) return done();
       throw new Error('execCommand refused');
     } catch (e) {
-      say('Your browser blocked the copy — drag the banner into Gmail instead, or open the fallback HTML below.');
+      status.textContent = 'Your browser blocked the copy — drag the banner into Gmail '
+                         + 'instead, or open the fallback HTML below.';
     }
+  }
+
+  document.querySelectorAll('button.copy').forEach(btn => {
+    btn.addEventListener('click', () => copy(btn.dataset.target, btn));
   });
+
+  // Say so plainly when the figures have gone stale. The banner drifts silently
+  // otherwise — it went six days out of date before anyone noticed.
+  (function () {
+    const built = new Date('2026-09-27');
+    if (isNaN(built)) return;
+    const days = Math.floor((Date.now() - built.getTime()) / 86400000);
+    if (days < 10) return;
+    const el = document.getElementById('freshness');
+    el.innerHTML = '<strong style="color:#F4F4F4">These figures are ' + days
+      + ' days old.</strong> Someone needs to re-run the build and re-upload. '
+      + el.innerHTML;
+    el.style.borderLeft = '3px solid var(--emerald)';
+    el.style.paddingLeft = '12px';
+  })();
+
+  // Fallback block and plain URL always describe the recommended (black) version.
+  document.getElementById('raw').textContent = markup('dark');
+  document.getElementById('imgurl').textContent = SRC.dark;
 </script>
 </body>
 </html>
